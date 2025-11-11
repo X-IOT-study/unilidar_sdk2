@@ -4,6 +4,17 @@ import subprocess
 from launch import LaunchDescription
 from launch_ros.actions import Node
 
+# -----------------------------------------------------------------------------
+# | 比特位 |           功能           |     取值0     |           取值1          |
+# |-------|--------------------------|--------------|-------------------------|
+# |   0   | 切换标准FOV和广角FOV       | 标准FOV(180°) | 广角FOV(192°)            |
+# |   1   | 切换3D和2D测量模式         | 3D测量模式    | 2D测量模式                |
+# |   2   | 使能或关闭IMU             | 使能IMU       | 关闭IMU                  |
+# |   3   | 切换网口模式和串口模式      | 网口模式       | 串口模式                 |
+# |   4   | 切换激光雷达上电默认启动模式 | 上电即自行启动  | 上电保持不转动并等待启动命令 |
+# | 5-31  | 保留                     | 保留          | 保留                     |
+# -----------------------------------------------------------------------------
+
 def generate_launch_description():
     # Run unitree lidar
     node1 = Node(
@@ -13,8 +24,8 @@ def generate_launch_description():
         output='screen',
         parameters= [
                 
-                {'initialize_type': 2},
-                {'work_mode': 0},
+                {'initialize_type': 1},             # 1: 初始化，2: 不初始化
+                {'work_mode': 8},                # 该功能暂未实现，保留
                 {'use_system_timestamp': True},
                 {'range_min': 0.0},
                 {'range_max': 100.0},

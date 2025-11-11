@@ -132,13 +132,16 @@ UnitreeLidarSDKNode::UnitreeLidarSDKNode(const rclcpp::NodeOptions &options)
 
     if (initialize_type_ == 1)
     {
-        lsdk_->initializeSerial(serial_port_, baudrate_,
-                                cloud_scan_num_, use_system_timestamp_, range_min_, range_max_);
+        
+        std::cout << "initialize lidar with serial port: " << serial_port_ << std::endl;
+        std::cout << "initializeSerrial: " << lsdk_->initializeSerial(serial_port_, baudrate_,
+                                cloud_scan_num_, use_system_timestamp_, range_min_, range_max_) << std::endl;
     }
     else if (initialize_type_ == 2)
     {
-        lsdk_->initializeUDP(lidar_port_, lidar_ip_, local_port_, local_ip_,
-                             cloud_scan_num_, use_system_timestamp_, range_min_, range_max_);
+        std::cout << "initialize lidar with udp port: " << lidar_port_ << std::endl;
+        std::cout << "initializeUDP: " << lsdk_->initializeUDP(lidar_port_, lidar_ip_, local_port_, local_ip_,
+                             cloud_scan_num_, use_system_timestamp_, range_min_, range_max_) << std::endl;
     }
     else
     {
@@ -146,9 +149,21 @@ UnitreeLidarSDKNode::UnitreeLidarSDKNode(const rclcpp::NodeOptions &options)
         exit(0);
     }
 
+    sleep(1);
+
+    // Set lidar work mode
+    std::cout << "set Lidar work_mode: " << work_mode_ << std::endl;
     lsdk_->setLidarWorkMode(work_mode_);
+    std::cout << "done" << std::endl;
+    sleep(1);
 
     // ROS2
+    RCLCPP_INFO(this->get_logger(), "work_mode_ = %d", work_mode_);
+    RCLCPP_INFO(this->get_logger(), "cloud_scan_num_ = %d", cloud_scan_num_);
+    RCLCPP_INFO(this->get_logger(), "use_system_timestamp_ = %d", use_system_timestamp_);
+    RCLCPP_INFO(this->get_logger(), "range_min_ = %f", range_min_);
+    RCLCPP_INFO(this->get_logger(), "range_max_ = %f", range_max_);
+
     broadcaster_ = std::make_shared<tf2_ros::TransformBroadcaster>(*this);
     pub_cloud_ = this->create_publisher<sensor_msgs::msg::PointCloud2>(cloud_topic_, 10);
     pub_imu_ = this->create_publisher<sensor_msgs::msg::Imu>(imu_topic_, 10);

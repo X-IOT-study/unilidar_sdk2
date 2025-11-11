@@ -2,7 +2,7 @@
  Copyright (c) 2020-2024, Unitree Robotics.Co.Ltd. All rights reserved.
 ***********************************************************************/
 
-#include "unitree_lidar_ros2.h"
+#include "unitree_lidar_ros2.hpp"
 
 int main(int argc, char *argv[])
 {
