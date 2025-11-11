@@ -44,11 +44,19 @@ $$
 ```bash
 cd unitree_lidar_sdk
 
-mkdir build
+mkdir build && cd build
 
-cd build
+cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local/unilidar-sdk2
 
-cmake .. && make -j2
+make -j$(nproc)
+```
+
+您可以通过运行以下命令来安装 SDK:
+
+```bash
+sudo make install
+
+ls /usr/local/unilidar-sdk2/  # 检查安装的文件
 ```
 
 ### 3.2 配置工作模式

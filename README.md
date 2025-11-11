@@ -45,11 +45,17 @@ You can compile the sample programs of this project according to the standard co
 ```bash
 cd unitree_lidar_sdk
 
-mkdir build
+mkdir build && cd build
 
-cd build
+cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local/unilidar-sdk2
 
-cmake .. && make -j2
+make -j$(nproc)
+```
+You can install the SDK by running the following command:
+```bash
+sudo make install
+
+ls /usr/local/unilidar-sdk2/  # Check the installed files
 ```
 
 ### 3.2 Configuring Work Mode
