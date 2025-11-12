@@ -24,8 +24,8 @@ def generate_launch_description():
         output='screen',
         parameters= [
                 
-                {'initialize_type': 1},             # 1: 初始化，2: 不初始化
-                {'work_mode': 8},                # 该功能暂未实现，保留
+                {'initialize_type': 1},             # 1: 初始化串口，2: 初始化网口
+                {'work_mode': 8},                
                 {'use_system_timestamp': True},
                 {'range_min': 0.0},
                 {'range_max': 100.0},
